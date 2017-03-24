@@ -1,0 +1,155 @@
+<!--
+	声明文档类型:html(html5)
+	作用:符合W3C的统一标准规范
+	每个浏览器对html css js都有自己的编译模式(兼容模式)
+-->
+<!doctype html>
+<html><!--根目录节点标签-->
+	<head><!--头部(规定一些信息 提供给浏览器识别) 用户看不到 非可视化标签-->
+		<meta charset="utf-8"><!--字符编码:国际编码-->
+		<!--网页文档的三要素-->
+		<title>电影预告展示-玄武老师</title><!--网页文档的标题-->
+		<meta name="keywords" content="关键词1，关键词2"><!--提供给搜索引擎搜索网站-->
+		<meta name="description" content="描述:对网页内容的大概的介绍">
+		<style>/* css样式的存放位置 */
+			*{/*通配符:选择到所有的标签元素*/
+				margin:0;/*外边距*/
+				padding:0;/*内边距*/
+			}
+			html{
+				height:100%;/*相对于浏览器窗口计算*/
+				overflow:hidden;/*超出隐藏*/
+			}
+			body{/*标签选择器*/
+				height:100%;/*相对于父元素的高度计算*/
+				background:url("images/bg.jpg") no-repeat;/*背景图片：url图片路径  不重复*/
+				background-size:100% 100%;/*背景尺寸:宽 高*/
+
+			}
+			#box{/* # id选择器 */
+				width: 100%;/*和浏览器窗口一样宽*/
+				height: 213px;/*高度:px*/
+				background:url("images/bg1.jpg");
+				margin-top:200px;
+				padding-top:33px;
+			}
+			.img{/*. class类选择器*/
+				width:100%;
+				height:180px;
+				
+			}
+			.img ul{
+				width:1560px;
+			}
+			.img ul li{/*混合选择器*/
+				position:relative;/*相对定位:参考物 相对于自己本身的位置定位*/
+				list-style:none;/*去除前面的小黑圆点*/
+				width:260px;
+				height:180px;
+				background:red;
+				float:left;/*左浮动:与父元素的左端对齐 依次的往右端显示 一行显示不下就换行接着对齐显示*/
+			}
+			.bigImg{
+				position:absolute;/*绝对定位:相对于拥有定位属性(relative/absolute/fixed)的最近的父元素定位*/
+				left:0;/*距离参考物左端的距离*/
+				top:0;/*距离参考物上端的距离*/
+				width:380px;
+				height:350px;
+				border:5px solid #ccc;/*边框线:宽度 类型(实心) 颜色*/
+				display:none;/*隐藏*/
+				z-index:100;/*层级:只有定位元素才能设置层级 层级越高越优先显示*/
+			}
+		</style>
+	</head>
+	<body><!--身体 可视化标签-->
+		<!--div盒子模型标签 宽度  高度 位置  边框 背景(css样式)-->
+		<div id="box"><!--id="自定义的名称" 唯一的(身份证号) 命名规范(见名知意:用有语义的英文单词)--> 
+			<div class="img"><!--class类名 可重复的(姓名)-->
+				<ul><!--无序列表标签-->
+					<li>
+						<!--img四要素 src(图片路径) width height alt(解释说明)-->
+						<img src="images/1.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/1.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+					<li>
+						<img src="images/2.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/2.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+					<li>
+						<img src="images/3.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/3.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+					<li>
+						<img src="images/4.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/4.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+					<li>
+						<img src="images/5.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/5.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+					<li>
+						<img src="images/6.jpg" width="100%" height="100%" alt="速度与激情">
+						<div class="bigImg">
+							<img src="images/6.jpg" width="100%" height="100%" alt="速度与激情">
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<script src="js/jquery.js"></script>
+		<script>
+			//什么元素 触发 什么事件 实现 什么效果
+			//$(".img ul li") 选择到所有的li标签
+			$(".img ul li").hover(function(){//鼠标移动到li上面实现什么效果
+				//什么元素 改变 什么css属性 
+				//$(this)指代当前鼠标移上去的li  find()查找 css()设置css样式
+				//$(this).find(".bigImg").css("display","block");
+				$(this).find(".bigImg").show();
+				clearInterval(timer);//清楚定时器
+			},function(){//鼠标移开实现什么效果
+				//$(this).find(".bigImg").css("display","none");
+				$(this).find(".bigImg").hide();
+				//启动定时器
+				autoplay();
+			});
+
+			//鼠标在li上面移动实现什么效果
+			$(".img ul li").mousemove(function(e){
+				//console.log(e);//在控制台输出
+				var x = e.clientX;//获取鼠标的x坐标
+				var y = e.clientY;//获取鼠标的y坐标
+				
+				//获取元素原来的位置坐标
+				var _left = $(this).offset().left;
+				var _top = $(this).offset().top;
+
+				$(this).find(".bigImg").css({left:x-_left,top:y-_top});
+			});
+		
+			var n = 0;
+			var timer = null;
+			function autoplay(){
+				timer = setInterval(function(){//每30毫米之后调用一次这个function()
+					n--;//n = n-1
+					if (n <= -window.innerWidth)//window.innerWidth获取窗口的宽度
+					{
+						n = 0
+					}
+					$(".img").css("margin-left",n+'px')
+				},30);
+			}
+			autoplay();
+		</script>
+	</body>
+</html>
